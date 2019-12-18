@@ -5,7 +5,7 @@
 single_bandit <- function(){
   #random mean for single bandit
   bandit_mean <- runif(n = 1, min = -2, 2)
-  bandit_sd <- runif(n = 1, min = -2, 2)
+  bandit_sd <- runif(n = 1, min = 0, 2)
   return(
     function(print_centre = FALSE){
       if (print_centre == TRUE){
@@ -25,11 +25,23 @@ single_bandit <- function(){
 #' @description Creates a function that will return a result from the
 #' 
 multibandit <- function(n_bandit){
+  if(n_bandit>0){
   #Create a list length n of single arm bandits
-  
+  bandits <- paste0("bandit",seq(1, n_bandit, 1))
+  multi_bandit_list <- lapply(bandits, function(x) assign(x, single_bandit()))
   return(
-    function(){
-      
+    function(action, return_metrics = F){
+      if(action>n_bandit){
+        stop(paste("Total action =", n_bandit))
+      }
+      if(return_metrics == TRUE){
+        return(multi_bandit_list[[action]](TRUE))
+      }else{
+        multi_bandit_list[[action]]()
+      }
     }
   )
+  }else{
+    stop("number of bandits must be positive integer")
+  }
 }
