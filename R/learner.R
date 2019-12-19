@@ -5,11 +5,12 @@
 #' @author Joe Peskett
 #' @export
 #' 
-learner <- function(exploration_probability = 0.1){
+make_learner <- function(exploration_probability = 0.1){
   #returns a function that will interact with a multibandit object
   function(bandit){
-    bandit_n <- length(bandit)
+    bandit_n <- bandit(1, T)$n_bandit
     exploration <- exploration_probability
+    bandit(sample.int(bandit_n, 1))
   }
 }
 

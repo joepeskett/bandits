@@ -38,7 +38,7 @@ multibandit <- function(n_bandit){
         stop(paste("Total action =", n_bandit))
       }
       if(return_metrics == TRUE){
-        return(multi_bandit_list[[action]](TRUE))
+        return(list(metrics = multi_bandit_list[[action]](TRUE), n_bandit = n_bandit))
       }else{
         multi_bandit_list[[action]]()
       }
