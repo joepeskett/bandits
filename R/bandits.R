@@ -2,6 +2,8 @@
 
 #' @title single_bandit
 #' @description A creates a function that will
+#' @author Joe Peskett
+#' @export 
 single_bandit <- function(){
   #random mean for single bandit
   bandit_mean <- runif(n = 1, min = -2, 2)
@@ -23,7 +25,8 @@ single_bandit <- function(){
 
 #' @title multibandit
 #' @description Creates a function that will return a result from the
-#' 
+#' @author Joe Peskett
+#' @export
 multibandit <- function(n_bandit){
   if(n_bandit>0){
   #Create a list length n of single arm bandits
