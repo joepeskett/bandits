@@ -42,3 +42,12 @@ multibandit <- function(n_bandit){
     stop("number of bandits must be positive integer")
   }
 }
+
+#' @title bandit_plot
+#' @description plot the distributions of the bandits
+#' @author Joe Pesektt
+#' @export
+#' 
+bandit_plot <- function(bandit){
+  #https://stats.stackexchange.com/questions/291576/visualizing-multiple-size-distributions-in-one-plot
+}

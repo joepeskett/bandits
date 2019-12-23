@@ -4,7 +4,7 @@
 #' @author Joe Peskett
 #' @export
 value_update <- function(OldEst, Target, Step_size){
-  NewEst <- OldEst+1/step_size*(Target - OldEst)
+  NewEst <- OldEst+1/Step_size*(Target - OldEst)
   return(NewEst)
 }
 
@@ -28,21 +28,25 @@ simple_learner <- function(n_bandit, exploration){
   values <- list(Q = rep(0, n_bandit), 
                  N = rep(0, n_bandit))
   return(function(bandit, print_values = F){
-    random_choice <- sample(x = c(1, rep(0, (1/exploration) - 1)))
+    print(values$Q)
+    print(values$N)
+    random_choice <- sample.int(n = c(1, rep(0, (1/exploration) - 1)),size = 1)
+    print(random_choice)
     if(random_choice == 1){
       action = sample.int(seq_len(n_bandit), 1)
     }else{
       action = which.max(values$Q)
     }
-    reward <- value_update(OldEst = values$Q[action], 
-                           Targer = #What is our target in this instance?
-                           Step_size = values$n[action])
-    values$Q[action] <- reward
+    bandit_output <- bandit(action)
+    Updated <- value_update(OldEst = values$Q[action], 
+                           Target = bandit_output,
+                           Step_size = values$N[action])
+    values$Q[action] <- Updated
     values$N[action] <- values$N[action]+1
     if(print_values == TRUE){
-      output <- list(Vals = values, reward = reward)
+      output <- list(Vals = values, reward = bandit_output, arm = action)
     }else{
-      output <- reward
+      output <- list(reward = bandit_output, arm = action)
     }
     return(output)
   })
@@ -57,7 +61,7 @@ simple_learner <- function(n_bandit, exploration){
 #' @author Joe Peskett
 #' @export
 experiment <- function(simple_learner, number_of_runs, save_logs = F){
-  output <- sapply(paste0("run", seq_len(number_of_runs)), simple_learner)
+  output <- sapply(paste0("run", seq_len(number_of_runs)), function(x) assingn(x, simple_learner))
   return(output)
 }
 
