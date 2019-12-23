@@ -1,5 +1,3 @@
-# Example functions:
-
 #' @title single_bandit
 #' @description A creates a function that will
 #' @author Joe Peskett
@@ -17,11 +15,7 @@ single_bandit <- function(){
       }
     }
   )
-  #Function
 }
-
-
-# In here I want a function to create a list of bandits so that the single bandit is used 5 distinct times
 
 #' @title multibandit
 #' @description Creates a function that will return a result from the
