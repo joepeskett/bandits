@@ -4,7 +4,7 @@
 #' @author Joe Peskett
 #' @export
 value_update <- function(OldEst, Target, Step_size){
-  NewEst <- OldEst+1/Step_size*(Target - OldEst)
+  NewEst <- OldEst+1/(Step_size+1)*(Target - OldEst)
   return(NewEst)
 }
 
@@ -24,16 +24,16 @@ simple_learner <- function(n_bandit, exploration){
   if(exploration >= 1){
     stop("Exploration must be number between 0 and 1")
   }
-  n_bandit <- length(n_bandit)
   values <- list(Q = rep(0, n_bandit), 
                  N = rep(0, n_bandit))
   return(function(bandit, print_values = F){
     print(values$Q)
     print(values$N)
+    #TODO: fix the random choice generator for the epsilon user defined value
     random_choice <- sample.int(n = c(1, rep(0, (1/exploration) - 1)),size = 1)
     print(random_choice)
     if(random_choice == 1){
-      action = sample.int(seq_len(n_bandit), 1)
+      action = sample.int(n_bandit, 1)
     }else{
       action = which.max(values$Q)
     }
@@ -41,8 +41,11 @@ simple_learner <- function(n_bandit, exploration){
     Updated <- value_update(OldEst = values$Q[action], 
                            Target = bandit_output,
                            Step_size = values$N[action])
-    values$Q[action] <- Updated
-    values$N[action] <- values$N[action]+1
+    values$Q[action] <<- Updated
+    values$N[action] <<- values$N[action]+1
+    print(Updated)
+    print(values$Q)
+    print(values$N)
     if(print_values == TRUE){
       output <- list(Vals = values, reward = bandit_output, arm = action)
     }else{
@@ -52,9 +55,7 @@ simple_learner <- function(n_bandit, exploration){
   })
 }
 
-#' @title decision_function
-#' @description A function that will control how the agent chooses the optimal action given the environmental context
-#' combined with the prior experience of the learner
+#To control the state we could instead have these passed in as parameters to the function
 
 #' @title experiment
 #' @description takes a multiarm bandit and a learner and runs through the training process. 
@@ -62,6 +63,7 @@ simple_learner <- function(n_bandit, exploration){
 #' @export
 experiment <- function(simple_learner, number_of_runs, save_logs = F){
   output <- sapply(paste0("run", seq_len(number_of_runs)), function(x) assingn(x, simple_learner))
+  
   return(output)
 }
 
