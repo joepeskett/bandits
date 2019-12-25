@@ -30,7 +30,7 @@ simple_learner <- function(n_bandit, exploration){
     print(values$Q)
     print(values$N)
     #TODO: fix the random choice generator for the epsilon user defined value
-    random_choice <- sample.int(n = c(1, rep(0, (1/exploration) - 1)),size = 1)
+    random_choice <- sample(x = c(1, rep(0, (1/exploration) - 1)),size = 1)
     print(random_choice)
     if(random_choice == 1){
       action = sample.int(n_bandit, 1)
@@ -61,9 +61,8 @@ simple_learner <- function(n_bandit, exploration){
 #' @description takes a multiarm bandit and a learner and runs through the training process. 
 #' @author Joe Peskett
 #' @export
-experiment <- function(simple_learner, number_of_runs, save_logs = F){
-  output <- sapply(paste0("run", seq_len(number_of_runs)), function(x) assingn(x, simple_learner))
-  
+experiment <- function(simple_learner, bandit number_of_runs, save_logs = F){
+  output <- sapply(paste0("run", seq_len(number_of_runs)), function(x) assingn(x, simple_learner(bandit)))
   return(output)
 }
 
