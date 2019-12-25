@@ -61,8 +61,8 @@ simple_learner <- function(n_bandit, exploration){
 #' @description takes a multiarm bandit and a learner and runs through the training process. 
 #' @author Joe Peskett
 #' @export
-experiment <- function(simple_learner, bandit number_of_runs, save_logs = F){
-  output <- sapply(paste0("run", seq_len(number_of_runs)), function(x) assingn(x, simple_learner(bandit)))
+experiment <- function(simple_learner, bandit, number_of_runs, save_logs = F){
+  output <- sapply(paste0("run", seq_len(number_of_runs)), function(x) assign(x, simple_learner(bandit)))
   return(output)
 }
 
