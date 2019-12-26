@@ -1,0 +1,17 @@
+Package: bandits
+Title: bandits
+Version: 0.0.0.9000
+Authors@R: 
+    person(given = "Joe",
+           family = "Peskett",
+           role = c("aut", "cre"),
+           email = "jwpeskett@gmail.com")
+Description: Basic reinforcement learning approach to solving a multiarm bandit problem. 
+License: What license it uses
+Encoding: UTF-8
+LazyData: true
+Suggests: 
+    knitr,
+    rmarkdown
+VignetteBuilder: knitr
+RoxygenNote: 6.1.1

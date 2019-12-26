@@ -1,0 +1,32 @@
+---
+title: "bandit_workflow"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{bandit_workflow}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+```{r setup}
+library(bandits)
+```
+
+Use the `multibandit` function to create an instance of our multibandit function. 
+
+```{r}
+bandit_machine <- multibandit(10)
+```
+
+This function has 10 arms that have different distributions of reward associated with each arm. 
+
+```{r}
+bandit_machine(2, return_metrics = T)
+bandit_machine(3, return_metrics = T)
+```
